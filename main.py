@@ -60,6 +60,7 @@ tweets_sample_by_author = tweepy.Cursor(api.user_timeline, "@enjoyphenix", tweet
 targeted_tweet = tweepy.Cursor(api.search, q="EmmanuelMacron", tweet_mode="extended", lang="fr").items(100)
 stream_tweets = tweepy.Cursor(api.search, q="*", tweet_mode="extended", lang="fr").items(1000)
 
+'''sed -E 's/<[^>]*>//g' sources.html // Exprestion pour recup les doc'''
 
 building_corpus(stream_tweets)
 
