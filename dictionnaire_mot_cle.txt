@@ -120,6 +120,7 @@ espingoin
 face de chien
 face de pet
 face de rat
+fdp
 FDP
 fell
 fils de bâtard
@@ -321,14 +322,9 @@ truieV
 va te faire foutre
 va te faire une soupe d’esques
 vaurien
-vendu
 vert-de-gris
 vide-couilles
 viédase
-vier
-vieux
-vieux blancX
-xéropineurY
 youd
 youpin
 youpine
