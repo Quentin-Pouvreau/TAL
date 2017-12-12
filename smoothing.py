@@ -212,7 +212,7 @@ def correctCorpus(corpus):
                     lastQuote = False
                 word = re.sub(r"[^a-zA-Z0-9ÀÂÄÇÈÉÊËÎÏÙÛÜàâäçèéêëîïùûüœ’`'-+]", " ", word)
                 if isCorrect(word) is not True:
-                    word = correct(previousWord, word)
+                    word = correctWord(previousWord, word)
                 lowerWord = word.lower()
                 if chkr.check(lowerWord) is True:
                     word = lowerWord
