@@ -66,6 +66,7 @@ def building_corpus(select):
 		else:
 			rt = tweet.full_text
 		clean_tweet = re.sub(r"http\S+","", rt)
+		'''do melt and processing stuff here'''
 		apprentissage.write(str(tweet.user.screen_name)+"\nle "+str(tweet.created_at)+" a dit :\n"+clean_tweet+"\n"+"------"+"\n")
 
 
