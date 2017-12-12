@@ -6,7 +6,6 @@ import smoothing
 import semantic
 import sys
 
-var = input("Please enter the name of the persone you're looking for: ")
 
 app_key="zjvCEgFYMsEaGAcGxGLBEsQHt"  
 app_secret="Zcyao8oaRNmrJLFTzGmb0kXrnWEEgYcTqiJDQTRpI7lw8yGfnS"  
@@ -17,7 +16,6 @@ auth = tweepy.OAuthHandler(app_key, app_secret)
 auth.set_access_token(oauth_token, oauth_token_secret)
 
 api = tweepy.API(auth)
-
 
 def file_reader(fileNameTweets):
 	with open(fileNameTweets, "r") as tweetReader:
@@ -39,10 +37,12 @@ def process_status(status):
 		print (clean_tweet)
 	
 		
-def building_learning_corpus(status):
+def building_learning_corpus():
+	stream_tweets = tweepy.Cursor(api.search, q="*", tweet_mode="extended", lang="fr").items(1000)
+
 	file_name = "Corpus_Apprentissage/corpus_apprentissage_"+time.strftime('%d-%m-%Y')+"_"+time.strftime('%Ih%M')+".txt"
 	apprentissage = open(file_name,"a",encoding="utf8")
-	for tweet in status:
+	for tweet in stream_tweets:
 		if "retweeted_status" in dir(tweet): 
 			rt = tweet.retweeted_status.full_text
 		else:
@@ -50,10 +50,17 @@ def building_learning_corpus(status):
 		clean_tweet = re.sub(r"http\S+|@\S+|#\S+", "", rt)
 		apprentissage.write(clean_tweet+"\n")
 
-def building_corpus(status):
+def building_corpus(select):
+	data = None 
+	var = input("Please enter the name of the persone you're looking for: ")
+	if select == "1":
+		data = tweepy.Cursor(api.search, q=str(var), tweet_mode="extended", lang="fr").items(10)
+	else:
+		data = tweepy.Cursor(api.user_timeline, "@"+str(var)+"", tweet_mode="extended").items(10)
+
 	file_name = "Corpus_Traitement/Corpus_de_traintement_"+time.strftime('%d-%m-%Y')+"_"+time.strftime('%Ih%M')+".txt"
 	apprentissage = open(file_name,"a",encoding="utf8")
-	for tweet in status:
+	for tweet in data:
 		if "retweeted_status" in dir(tweet): 
 			rt = tweet.retweeted_status.full_text
 		else:
@@ -68,12 +75,24 @@ def process_user(users):
 		print (user.description)
 		print (user.location)
 
-
-tweets_sample_by_name = tweepy.Cursor(api.search, q="emanuel macron from:piparkaq", tweet_mode="extended").items()
 tweets_sample_by_location = tweepy.Cursor(api.search, q="Emmanuel Macron", geocode="48.692054,6.184417,50km", tweet_mode="extended", lang="fr").items(50)
-tweets_sample_by_author = tweepy.Cursor(api.user_timeline, "@piparkaq", tweet_mode="extended").items()
-targeted_tweet = tweepy.Cursor(api.search, q=str(var), tweet_mode="extended", lang="fr").items(10)
-stream_tweets = tweepy.Cursor(api.search, q="*", tweet_mode="extended", lang="fr").items(1000)
 
-building_learning_corpus(stream_tweets)
-'''building_corpus(targeted_tweet)'''
+mode = input("Que shouaitez-vous faire : \n - Crée un corpus d'apprentissage: tapé 1 \n -Faire une recherge sur le harcèlement: tapé 2 \n")
+
+if mode == 1:
+	building_learning_corpus()
+else:
+	select = input("Votre recherge porte sur : \n -Une victime, tapé 1 \n -Un agresseur, tapé 2 \n")
+	building_corpus(select)
+
+	
+
+
+
+
+'''tweets_sample_by_name = tweepy.Cursor(api.search, q="emanuel macron from:piparkaq", tweet_mode="extended").items()'''
+
+
+
+
+
