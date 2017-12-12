@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import os
 import tweepy
 import re
@@ -5,6 +7,8 @@ import time
 import smoothing
 import semantic
 import sys
+
+
 
 
 app_key="zjvCEgFYMsEaGAcGxGLBEsQHt"  
@@ -54,10 +58,11 @@ def building_corpus(select):
 	data = None 
 	if select == "1":
 		var = input("Entrez le nom de la victime que vous cherchez :")
-		data = tweepy.Cursor(api.search, q=str(var), tweet_mode="extended", lang="fr").items(10)
+		data = tweepy.Cursor(api.search, q=str(var), tweet_mode="extended", lang="fr").items(100)
 	elif select == "2":
-		var = input("Entrez le nom de l'agresseur que vous cherchez :")
-		data = tweepy.Cursor(api.user_timeline, "@"+str(var)+"", tweet_mode="extended").items(10)
+		var = input("Entrez le nom d'utilisateur Twitter de l'agresseur que vous cherchez :")
+		data = re.sub(r"@\S+","", str(var))
+		data = tweepy.Cursor(api.user_timeline, "@"+str(var)+"", tweet_mode="extended").items(100)
 	else:
 		sys.exit("Mauvaise valeur") 
 
@@ -71,7 +76,18 @@ def building_corpus(select):
 		clean_tweet = re.sub(r"http\S+","", rt)
 		corrected_tweet = smoothing.correctTweet(str(clean_tweet))
 		apprentissage.write(str(tweet.user.screen_name)+"\nle "+str(tweet.created_at)+" a dit :\n"+corrected_tweet+"\n"+"------"+"\n")
-	'''	semantic.filterBadTweets("correctedCorpus.txt")
+		tweetToAnalyze = list()
+		tweetmelte = os.system("echo "+clean_tweet+" | MElt -L -T")
+		print(tweetmelte)
+		''' for token in tweetmelte.split(" "):
+			tweetToAnalyze.append(token.split("/")[2])
+		s = " "
+		isBadTweet(s.join(tweetToAnalyze))
+		 print(semantic.isBadTweet("putain de salope")) 
+		if semantic.isBadTweet("Bonjour"):
+			apprentissage.write(str(tweet.user.screen_name)+"\nle "+str(tweet.created_at)+" a dit :\n"+corrected_tweet+"\n"+"------"+"\n")
+
+		semantic.filterBadTweets("correctedCorpus.txt")
 		os.system("cat badTweets.txt | MElt -L -T > melt_badword.melt")'''
 		
 def process_user(users):
