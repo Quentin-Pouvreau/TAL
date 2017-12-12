@@ -52,12 +52,13 @@ def building_learning_corpus():
 
 def building_corpus(select):
 	data = None 
-	var = input("Please enter the name of the persone you're looking for: ")
 	if select == "1":
 		data = tweepy.Cursor(api.search, q=str(var), tweet_mode="extended", lang="fr").items(10)
-	else:
+	if select == "2":
 		data = tweepy.Cursor(api.user_timeline, "@"+str(var)+"", tweet_mode="extended").items(10)
-
+	else:
+		sys.exit("Mauvaise valeur") 
+	var = input("Entrez le nom de la personne que vous cherchez :")
 	file_name = "Corpus_Traitement/Corpus_de_traintement_"+time.strftime('%d-%m-%Y')+"_"+time.strftime('%Ih%M')+".txt"
 	apprentissage = open(file_name,"a",encoding="utf8")
 	for tweet in data:
@@ -78,12 +79,12 @@ def process_user(users):
 
 tweets_sample_by_location = tweepy.Cursor(api.search, q="Emmanuel Macron", geocode="48.692054,6.184417,50km", tweet_mode="extended", lang="fr").items(50)
 
-mode = input("Que shouaitez-vous faire : \n - Crée un corpus d'apprentissage: tapé 1 \n -Faire une recherge sur le harcèlement: tapé 2 \n")
+mode = input("Que shouaitez-vous faire : \n - Créer un corpus d'apprentissage, taper 1 \n - Faire une recherche sur le harcèlement taper 2 \n")
 
 if mode == 1:
 	building_learning_corpus()
 else:
-	select = input("Votre recherge porte sur : \n -Une victime, tapé 1 \n -Un agresseur, tapé 2 \n")
+	select = input("Votre recherche porte sur : \n - Une victime, taper 1 \n - Un agresseur, taper 2 \n")
 	building_corpus(select)
 
 	
