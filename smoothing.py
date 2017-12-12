@@ -197,7 +197,7 @@ def correctCorpus(corpus):
         correctedWords = list()
         for word in line.strip().split(" "):
             word.strip()
-            if re.search(r"[a-zA-Z0-9ÀÂÄÇÈÉÊËÎÏÙÛÜàâäçèéêëîïùûüœ+]", word) is not None:
+            if re.search(r"[a-zA-Z0-9ÀÂÄÇÈÉÊËÎÏÔÙÛÜàâäçèéêëîïôùûüœ+]", word) is not None:
                 coma = False
                 dot = False
                 firstQuote = False
@@ -210,7 +210,7 @@ def correctCorpus(corpus):
                     firstQuote = True
                 if word[len(word) - 1] == '"':
                     lastQuote = False
-                word = re.sub(r"[^a-zA-Z0-9ÀÂÄÇÈÉÊËÎÏÙÛÜàâäçèéêëîïùûüœ’`'-+]", " ", word)
+                word = re.sub(r"[^a-zA-Z0-9ÀÂÄÇÈÉÊËÎÏÔÙÛÜàâäçèéêëîïôùûüœ’`'-+]", " ", word)
                 if isCorrect(word) is not True:
                     word = correctWord(previousWord, word)
                 lowerWord = word.lower()
