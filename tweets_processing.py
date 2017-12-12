@@ -39,7 +39,6 @@ def process_status(status):
 		
 def building_learning_corpus():
 	stream_tweets = tweepy.Cursor(api.search, q="*", tweet_mode="extended", lang="fr").items(1000)
-
 	file_name = "Corpus_Apprentissage/corpus_apprentissage_"+time.strftime('%d-%m-%Y')+"_"+time.strftime('%Ih%M')+".txt"
 	apprentissage = open(file_name,"a",encoding="utf8")
 	for tweet in stream_tweets:
@@ -49,17 +48,20 @@ def building_learning_corpus():
 			rt = tweet.full_text
 		clean_tweet = re.sub(r"http\S+|@\S+|#\S+", "", rt)
 		apprentissage.write(clean_tweet+"\n")
+	print("done")
 
 def building_corpus(select):
 	data = None 
 	if select == "1":
+		var = input("Entrez le nom de la victime que vous cherchez :")
 		data = tweepy.Cursor(api.search, q=str(var), tweet_mode="extended", lang="fr").items(10)
-	if select == "2":
+	elif select == "2":
+		var = input("Entrez le nom de l'agresseur que vous cherchez :")
 		data = tweepy.Cursor(api.user_timeline, "@"+str(var)+"", tweet_mode="extended").items(10)
 	else:
 		sys.exit("Mauvaise valeur") 
-	var = input("Entrez le nom de la personne que vous cherchez :")
-	file_name = "Corpus_Traitement/Corpus_de_traintement_"+time.strftime('%d-%m-%Y')+"_"+time.strftime('%Ih%M')+".txt"
+
+	file_name = "Corpus_Traitement/Corpus_de_"+str(var)+"_corrige_"+time.strftime('%d-%m-%Y')+"_"+time.strftime('%Ih%M')+".txt"
 	apprentissage = open(file_name,"a",encoding="utf8")
 	for tweet in data:
 		if "retweeted_status" in dir(tweet): 
@@ -67,10 +69,11 @@ def building_corpus(select):
 		else:
 			rt = tweet.full_text
 		clean_tweet = re.sub(r"http\S+","", rt)
-		'''do melt and processing stuff here'''
-		apprentissage.write(str(tweet.user.screen_name)+"\nle "+str(tweet.created_at)+" a dit :\n"+clean_tweet+"\n"+"------"+"\n")
-
-
+		corrected_tweet = smoothing.correctTweet(str(clean_tweet))
+		apprentissage.write(str(tweet.user.screen_name)+"\nle "+str(tweet.created_at)+" a dit :\n"+corrected_tweet+"\n"+"------"+"\n")
+	'''	semantic.filterBadTweets("correctedCorpus.txt")
+		os.system("cat badTweets.txt | MElt -L -T > melt_badword.melt")'''
+		
 def process_user(users):
 	for user in users:
 		print (user.name)
@@ -81,16 +84,14 @@ tweets_sample_by_location = tweepy.Cursor(api.search, q="Emmanuel Macron", geoco
 
 mode = input("Que shouaitez-vous faire : \n - Créer un corpus d'apprentissage, taper 1 \n - Faire une recherche sur le harcèlement taper 2 \n")
 
-if mode == 1:
+if mode == "1":
+	print("wait...")
 	building_learning_corpus()
-else:
+elif mode == "2":
 	select = input("Votre recherche porte sur : \n - Une victime, taper 1 \n - Un agresseur, taper 2 \n")
 	building_corpus(select)
-
-	
-
-
-
+else:
+	sys.exit("Mauvaise valeur") 
 
 '''tweets_sample_by_name = tweepy.Cursor(api.search, q="emanuel macron from:piparkaq", tweet_mode="extended").items()'''
 
