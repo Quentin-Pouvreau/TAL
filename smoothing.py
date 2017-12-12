@@ -43,14 +43,15 @@ commonPatterns["apres"] = "après"
 commonPatterns["bo"] = "beau"
 commonPatterns["en +"] = "plus"
 
-def tryPattern(previousWord, word):
-    bigram = previousWord + " " + word
-    if bigram in commonPatterns:
-        return commonPatterns[bigram]
+
+def tryPattern(word, previousWord):
+    if previousWord is not None:
+        bigram = previousWord + " " + word
+        if bigram in commonPatterns:
+            return commonPatterns[bigram]
     elif word in commonPatterns:
         return commonPatterns[word]
-    else:
-        return word
+    return None
 
 
 accents = dict()
@@ -88,8 +89,6 @@ def smoothing(previousWord, suggestions):
             if prob > max_prob:
                 max_prob = prob
                 correctedWord = suggestion
-    if correctedWord is None:
-        return suggestions[0]
     return correctedWord
 
 
@@ -102,24 +101,20 @@ def correctUnigram(word):
     return correctAccent(word)
 
 
-def correctBigram(previousWord, word):
-    word = tryPattern(previousWord, word)
-    if chkr.check(word) is not True:
-        suggestions = chkr.suggest(word)
-        if len(suggestions) > 0:
-            return smoothing(previousWord, suggestions)
-    return word
-
-
-def correct(previousWord, word):
+def correctWord(previousWord, word):
+    correctedWord = tryPattern(word, previousWord)
+    if correctedWord is not None:
+        return correctedWord
     word = correctUnigram(word)
     if chkr.check(word) is not True:
+        suggestions = chkr.suggest(word)
         if previousWord is None:
-            suggestions = chkr.suggest(word)
             if len(suggestions) > 0:
                 return suggestions[0]
         else:
-            return correctBigram(previousWord, word)
+            correctedWord = smoothing(previousWord, suggestions)
+            if correctedWord is not None:
+                return correctedWord
     return word
 
 
@@ -143,24 +138,27 @@ def isCorrect(word):
     return False
 
 
-def correctCorpus(corpus):
-    corpus = open(corpus, 'r', encoding="utf8")
-    correctedCorpus = open("correctedCorpus.txt", 'w', encoding="utf8")
-    for line in corpus:
+def correctTweet(tweet):
         previousWord = None
         correctedWords = list()
-        for word in line.strip().split(" "):
+        for word in tweet.strip().split(" "):
             word.strip()
             if re.search(r"[a-zA-Z0-9ÀÂÄÇÈÉÊËÎÏÙÛÜàâäçèéêëîïùûüœ+]", word) is not None:
                 coma = False
                 dot = False
+                firstQuote = False
+                lastQuote = False
+                if word[len(word) - 1] == ',':
+                    coma = True
+                elif word[len(word) - 1] == '.':
+                    dot = True
+                if word[0] == '"':
+                    firstQuote = True
+                if word[len(word) - 1] == '"':
+                    lastQuote = False
+                word = re.sub(r"[^a-zA-Z0-9ÀÂÄÇÈÉÊËÎÏÙÛÜàâäçèéêëîïùûüœ’`'-+]", " ", word)
                 if isCorrect(word) is not True:
-                    if word[len(word) - 1] == ',':
-                        coma = True
-                    elif word[len(word) - 1] == '.':
-                        dot = True
-                    word = re.sub(r"[^a-zA-Z0-9ÀÂÄÇÈÉÊËÎÏÙÛÜàâäçèéêëîïùûüœ’`'-+]", "", word)
-                    word = correct(previousWord, word)
+                    word = correctWord(previousWord, word)
                 lowerWord = word.lower()
                 if chkr.check(lowerWord) is True:
                     word = lowerWord
@@ -170,17 +168,25 @@ def correctCorpus(corpus):
                 previousWord = word
                 if coma:
                     word += ','
+                    previousWord = None
                 elif dot:
                     word += '.'
+                    previousWord = None
+                if firstQuote:
+                    word = '"' + word
+                    previousWord = None
+                if lastQuote:
+                    word += '"'
+                    previousWord = None
             else:
                 previousWord = None
-            correctedWords.append(word)
-        correctedWords[0] = correctedWords[0].capitalize()
-        s = " "
-        correctedLine = s.join(correctedWords)
-        correctedCorpus.write(correctedLine + "\n")
-    correctedCorpus.close()
-    corpus.close()
+            if word != "" and word != " ":
+                correctedWords.append(word)
+        if len(correctedWords) != 0:
+            correctedWords[0] = correctedWords[0].capitalize()
+            s = " "
+            correctedLine = s.join(correctedWords)
+            correctedCorpus.write(correctedLine + "\n")
 
 
 def majUnigrams():

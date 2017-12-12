@@ -4,11 +4,12 @@ aller se faire enculer
 aller se faire endauffer
 aller se faire foutre
 aller se faire mettre
+aller se faire voir
 andouille
 appareilleuse
 assimilé
 astèque
-avortonB
+avorton
 bande d’abrutis
 bâtard
 bellicole
@@ -22,13 +23,11 @@ bic
 bicot
 bite
 bitembois
-Bitembois
 bordille
 boudin
 bouffon
 bougnoul
 bougnoule
-Bougnoulie
 bougnoulisation
 bougnouliser
 bougre
@@ -40,7 +39,8 @@ branleur
 bridé
 bridée
 brigand
-brise-burnesC
+brise-burne
+brise-burnes
 cacou
 cafre
 cageot
@@ -48,6 +48,8 @@ caldoche
 casse-bonbon
 casse-couille
 casse-couilles
+casse-burne
+casse-burnes
 cave
 chachar
 chagasse
@@ -86,7 +88,7 @@ cricri
 crotté
 crouillat
 crouille
-croûtonD
+vieux croûton
 débile
 doryphore
 doxosophe
@@ -97,7 +99,7 @@ ducon
 duconnot
 dugenoux
 dugland
-duschnockE
+duschnock
 emmanché
 emmerder
 emmerdeur
@@ -159,24 +161,24 @@ gourgandine
 grognasse
 gueniche
 guide de merde
-guindouleH
+guindoule
 habitant
 haloufI
 imbécile
 incapable
-islamo-gauchismeJ
+islamo-gauchisme
 jean-foutre
 jeannette
-journalopeK
+journalope
 Khmer rouge
 Khmer vert
 kikoo
 kikou
-KrautL
+Kraut
 lâche
 lâcheux
 lavette
-lopetteM
+lopette
 magot
 makoumé
 mal blanchi
@@ -218,10 +220,9 @@ niquer
 niquer sa mère
 nœud
 NTM
-nulO
+nul
 orchidoclaste
 ordure
-orthoP
 pakos
 panoufle
 patarin
@@ -266,7 +267,7 @@ robespierrot
 roi des cons
 rosbeef
 rosbif
-roulureS
+roulure
 sac à foutre
 sac à merde
 sac à papier
@@ -318,9 +319,7 @@ trou de cul
 trou du cul
 trouduc
 truiasse
-truieV
-va te faire foutre
-va te faire une soupe d’esques
+truie
 vaurien
 vert-de-gris
 vide-couilles
