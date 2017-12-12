@@ -139,9 +139,63 @@ def isCorrect(word):
 
 
 def correctTweet(tweet):
+    previousWord = None
+    correctedWords = list()
+    for word in tweet.strip().split(" "):
+        word.strip()
+        if re.search(r"[a-zA-Z0-9ÀÂÄÇÈÉÊËÎÏÙÛÜàâäçèéêëîïùûüœ+]", word) is not None:
+            coma = False
+            dot = False
+            firstQuote = False
+            lastQuote = False
+            if word[len(word) - 1] == ',':
+                coma = True
+            elif word[len(word) - 1] == '.':
+                dot = True
+            if word[0] == '"':
+                firstQuote = True
+            if word[len(word) - 1] == '"':
+                lastQuote = False
+            word = re.sub(r"[^a-zA-Z0-9ÀÂÄÇÈÉÊËÎÏÙÛÜàâäçèéêëîïùûüœ’`'-+]", " ", word)
+            if isCorrect(word) is not True:
+                word = correctWord(previousWord, word)
+            lowerWord = word.lower()
+            if chkr.check(lowerWord) is True:
+                word = lowerWord
+            addUnigram(word)
+            if previousWord is not None:
+                addBigram(previousWord + " " + word)
+            previousWord = word
+            if coma:
+                word += ','
+                previousWord = None
+            elif dot:
+                word += '.'
+                previousWord = None
+            if firstQuote:
+                word = '"' + word
+                previousWord = None
+            if lastQuote:
+                word += '"'
+                previousWord = None
+        else:
+            previousWord = None
+        if word != "" and word != " ":
+            correctedWords.append(word)
+    if len(correctedWords) != 0:
+        correctedWords[0] = correctedWords[0].capitalize()
+        s = " "
+        correctedTweet = s.join(correctedWords)
+    return correctedTweet
+
+
+def correctCorpus(corpus):
+    corpus = open(corpus, 'r', encoding="utf8")
+    correctedCorpus = open("correctedCorpus.txt", 'w', encoding="utf8")
+    for line in corpus:
         previousWord = None
         correctedWords = list()
-        for word in tweet.strip().split(" "):
+        for word in line.strip().split(" "):
             word.strip()
             if re.search(r"[a-zA-Z0-9ÀÂÄÇÈÉÊËÎÏÙÛÜàâäçèéêëîïùûüœ+]", word) is not None:
                 coma = False
@@ -158,7 +212,7 @@ def correctTweet(tweet):
                     lastQuote = False
                 word = re.sub(r"[^a-zA-Z0-9ÀÂÄÇÈÉÊËÎÏÙÛÜàâäçèéêëîïùûüœ’`'-+]", " ", word)
                 if isCorrect(word) is not True:
-                    word = correctWord(previousWord, word)
+                    word = correct(previousWord, word)
                 lowerWord = word.lower()
                 if chkr.check(lowerWord) is True:
                     word = lowerWord
@@ -187,7 +241,8 @@ def correctTweet(tweet):
             s = " "
             correctedLine = s.join(correctedWords)
             correctedCorpus.write(correctedLine + "\n")
-
+    correctedCorpus.close()
+    corpus.close()
 
 def majUnigrams():
     unigramsTxt = open("unigrams.txt", 'w', encoding="utf8")
