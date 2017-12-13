@@ -57,7 +57,7 @@ def building_corpus(select):
 	data = None 
 	if select == "1":
 		var = input("Entrez le nom de la victime que vous cherchez :")
-		data = tweepy.Cursor(api.search, q=str(var), tweet_mode="extended", lang="fr").items(100)
+		data = tweepy.Cursor(api.search, q="="+var+"", tweet_mode="extended", lang="fr").items(100)
 	elif select == "2":
 		var = input("Entrez le nom d'utilisateur Twitter de l'agresseur que vous cherchez :")
 		data = re.sub(r"@\S+","", str(var))
@@ -65,22 +65,29 @@ def building_corpus(select):
 	else:
 		sys.exit("Mauvaise valeur") 
 
-	file_name = "Corpus_Traitement/Corpus_de_"+str(var)+"_corrige_"+time.strftime('%d-%m-%Y')+"_"+time.strftime('%Ih%M')+".txt"
-	apprentissage = open(file_name,"a",encoding="utf8")
+	file_name = "Corpus_Traitement/Corpus_de_"+str(var)+"_clean_"+time.strftime('%d-%m-%Y')+"_"+time.strftime('%Ih%M')+".txt"
+	corpus = open(file_name,"a",encoding="utf8")
 	for tweet in data:
 		if "retweeted_status" in dir(tweet): 
-			rt = tweet.retweeted_status.full_text
+			rt = ""
 		else:
 			rt = tweet.full_text
 		clean_tweet = re.sub(r"http\S+","", rt)
-		corrected_tweet = smoothing.correctTweet(str(clean_tweet))
+		'''corpus.write(str(tweet.user.screen_name)+"\nle "+str(tweet.created_at)+" a dit :\n"+corrected_tweet+"\n"+"------"+"\n")'''
+		corpus.write("---"+str(tweet.user.screen_name)+"---"+clean_tweet+"\n")
+	'''smoothing.correctCorpus(file_name)
+	os.system("rm MEltedTweets.melt")
+	os.system("rm badTweets.melt")
+	os.system("cat correctedCorpus.txt | MElt -L -T >> MEltedTweets.melt")
+	semantic.filterBadTweets("MEltedTweets.melt")'''
+	
+'''
+		if semantic.isBadTweet(meltedtweet.readline()):
 		apprentissage.write(str(tweet.user.screen_name)+"\nle "+str(tweet.created_at)+" a dit :\n"+corrected_tweet+"\n"+"------"+"\n")
-		meltedTweet = os.system("echo "+clean_tweet+" | MElt -L -T")
-		if semantic.isBadTweet(isBadTweet(meltedTweet) ):
-			apprentissage.write(str(tweet.user.screen_name)+"\nle "+str(tweet.created_at)+" a dit :\n"+corrected_tweet+"\n"+"------"+"\n")
+		semantic.filterBadTweets("correctedCorpus.txt")
+		os.system("cat badTweets.txt | MElt -L -T > melt_badword.melt")
 
-		'''semantic.filterBadTweets("correctedCorpus.txt")
-		os.system("cat badTweets.txt | MElt -L -T > melt_badword.melt")'''
+		'''
 
 
 def process_user(users):
