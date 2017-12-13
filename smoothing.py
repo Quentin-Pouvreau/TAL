@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import enchant
 import re
 
@@ -129,17 +131,20 @@ def correctWord(previousWord, word):
 
 
 def addUnigram(unigram):
-    if unigram in unigrams:
-        unigrams[unigram] += 1
-    else:
-        unigrams[unigram] = 1
+    if chkr.check(unigram) is True:
+        if unigram in unigrams:
+            unigrams[unigram] += 1
+        else:
+            unigrams[unigram] = 1
 
 
-def addBigram(bigram):
-    if bigram in bigrams:
-        bigrams[bigram] += 1
-    else:
-        bigrams[bigram] = 1
+def addBigram(previousWord, word):
+    if chkr.check(word) is True and chkr.check(previousWord) is True:
+        bigram = previousWord + " " + word
+        if bigram in bigrams:
+            bigrams[bigram] += 1
+        else:
+            bigrams[bigram] = 1
 
 
 def correctTweet(tweet):
@@ -163,7 +168,7 @@ def correctTweet(tweet):
                         addUnigram(unigram)
                 addUnigram(word)
                 if previousWord is not None:
-                    addBigram(previousWord + " " + word)
+                    addBigram(previousWord, word)
                 previousWord = word
                 if firstQuote:
                     word = '"' + word
