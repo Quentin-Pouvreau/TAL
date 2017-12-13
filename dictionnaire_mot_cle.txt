@@ -6,35 +6,18 @@ aller se faire foutre
 aller se faire mettre
 aller se faire voir
 andouille
-appareilleuse
-assimilé
-astèque
 avorton
 bande d’abrutis
 bâtard
-bellicole
-bête
-bête à pleurer
-bête comme ses pieds
-bête comme un chou
-bête comme un cochon
 biatch
-bic
-bicot
 bite
-bitembois
-bordille
 boudin
 bouffon
 bougnoul
 bougnoule
-bougnoulisation
-bougnouliser
-bougre
 boukak
 boulet
 bounioul
-bourdille
 branleur
 bridé
 bridée
@@ -53,9 +36,6 @@ casse-burnes
 cave
 chachar
 chagasse
-charlot de vogue
-chauffard
-chien de chrétien
 chiennasse
 chienne
 chier
@@ -68,15 +48,7 @@ citrouille
 coche
 colon
 con
-con comme la lune
-con comme la Lune
-con comme ses pieds
-con comme un balai
-con comme un manche
-con comme une chaise
-con comme une valise sans poignée
 conasse
-conchier
 connard
 connarde
 connasse
@@ -84,8 +56,6 @@ counifle
 courtaud
 crétin
 crevure
-cricri
-crotté
 crouillat
 crouille
 vieux croûton
@@ -94,20 +64,14 @@ doryphore
 doxosophe
 doxosophie
 drouille
-du schnoc
-ducon
-duconnot
-dugenoux
-dugland
-duschnock
-emmanché
+schnoc
+emmancher
 emmerder
 emmerdeur
 emmerdeuse
 empafé
 empapaouté
 enculé
-enculé de ta race
 enculer
 enfant de putain
 enfant de pute
@@ -115,16 +79,13 @@ enfant de salaud
 enflure
 enfoiré
 envaselineur
-épais
-espèce de
 espingoin
-étronF
+étron
 face de chien
 face de pet
 face de rat
 fdp
 FDP
-fell
 fils de bâtard
 fils de chien
 fils de chienne
@@ -133,13 +94,12 @@ fils de putain
 fils de pute
 fils de ta race
 fiotte
-folle
 fouteur
 fripouille
 frisé
 fritz
 Fritz
-fumierG
+fumier
 garage à bite
 garce
 gaupe
@@ -151,7 +111,6 @@ glandouillou
 glandu
 gnoul
 gnoule
-Godon
 gogol
 goï
 gouilland
@@ -162,21 +121,14 @@ grognasse
 gueniche
 guide de merde
 guindoule
-habitant
-haloufI
+halouf
 imbécile
 incapable
-islamo-gauchisme
 jean-foutre
-jeannette
-journalope
-Khmer rouge
-Khmer vert
+jean foutre
 kikoo
 kikou
-Kraut
 lâche
-lâcheux
 lavette
 lopette
 magot
@@ -184,12 +136,9 @@ makoumé
 mal blanchi
 manche
 mange-merde
-mangeux de marde
 marchandot
 margouilliste
-marsouin
 mauviette
-melon
 merdaille
 merdaillon
 merde
@@ -201,13 +150,12 @@ minus
 misérable
 moinaille
 moins-que-rien
+moins que rien
 monacaille
 mongol
-mongol à batteries
+mongol
 moricaud
-mort aux vaches
 morue
-moule à merde
 naze
 négro
 nez de bœuf
@@ -227,21 +175,17 @@ pakos
 panoufle
 patarin
 PD
+pd
 peau de vache
 pecque
 pédale
 pédé
 pédoque
-pelle à merde
 péquenaud
-personnage de comédie
-petite bite
-petite merde
 pignouf
 pissou
 pleutre
 plouc
-pompe à vélo
 porc
 porcas
 porcasse
@@ -253,24 +197,19 @@ poundé
 pourriture
 punaise
 putain
-putain de ta race
 pute
-pute borgne
-putoisR
+putois
 raclure
 rat
 raté
 raton
-retourne aux asperges
 ripopée
-robespierrot
 roi des cons
 rosbeef
 rosbif
 roulure
 sac à foutre
 sac à merde
-sac à papier
 sagouin
 salaud
 sale
@@ -283,11 +222,10 @@ schleu
 schnock
 schnoque
 sent-la-pisse
-social-traître
+sentir la pisse
 sottiseux
 sous-merde
-stéariqueT
-ta bouche
+stéarique
 ta gueule
 ta mère
 ta race
@@ -298,7 +236,6 @@ tantouserie
 tantouze
 tapette
 tarlouze
-tata
 tebé
 tête carrée
 tête de boche
@@ -309,11 +246,10 @@ tête de nœud
 tête de veau
 téteux
 teubé
-Thénardier
+tg
 thon
 tocard
 traînée
-travail d’Arabe
 triple buse
 trou de cul
 trou du cul
@@ -321,7 +257,6 @@ trouduc
 truiasse
 truie
 vaurien
-vert-de-gris
 vide-couilles
 viédase
 youd

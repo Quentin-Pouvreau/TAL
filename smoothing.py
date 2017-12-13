@@ -5,6 +5,7 @@ import re
 unigrams = dict()
 unigramsTxt = open("unigrams.txt", 'r', encoding="utf8")
 for line in unigramsTxt:
+    line = line.strip()
     if "=" in line:
         unigrams[line.split("=")[0]] = int(line.split("=")[1])
 unigramsTxt.close()
@@ -28,10 +29,19 @@ commonPatterns["1 er"] = "premier"
 commonPatterns["qd"] = "quand"
 commonPatterns["pcq"] = "parce que"
 commonPatterns["pq"] = "pourquoi"
+commonPatterns["pr"] = "pour"
+commonPatterns["qqn"] = "quelqu'un"
+commonPatterns["qqc"] = "quelque chose"
+commonPatterns["svp"] = "s'il vous plaît"
+commonPatterns["stp"] = "s'il te plaît"
+commonPatterns["slt"] = "salut"
 commonPatterns["c"] = "c'est"
 commonPatterns["ct"] = "c'était"
 commonPatterns["dla"] = "de la"
 commonPatterns["t'façon"] = "de toute façon"
+commonPatterns["tfaçon"] = "de toute façon"
+commonPatterns["t'facon"] = "de toute façon"
+commonPatterns["tfacon"] = "de toute façon"
 commonPatterns["tjr"] = "toujours"
 commonPatterns["tjrs"] = "toujours"
 commonPatterns["t"] = "tu es"
@@ -95,8 +105,6 @@ def smoothing(previousWord, suggestions):
 
 
 def correctUnigram(word):
-    if re.search(r"\d+", word) is not None:
-        return re.sub(r"(\d+)", r"\1 ", word)
     capitalizedWord = word.capitalize()
     if chkr.check(capitalizedWord) is True:
         return capitalizedWord
@@ -134,57 +142,37 @@ def addBigram(bigram):
         bigrams[bigram] = 1
 
 
-def isCorrect(word):
-    if chkr.check(word) is True or word in unigrams:
-        return True
-    return False
-
-
 def correctTweet(tweet):
     previousWord = None
     correctedWords = list()
     for word in tweet.strip().split(" "):
-        word.strip()
-        if re.search(r"[a-zA-Z0-9ÀÂÄÇÈÉÊËÎÏÙÛÜàâäçèéêëîïùûüœ+]", word) is not None:
-            coma = False
-            dot = False
-            firstQuote = False
-            lastQuote = False
-            if word[len(word) - 1] == ',':
-                coma = True
-            elif word[len(word) - 1] == '.':
-                dot = True
-            if word[0] == '"':
-                firstQuote = True
-            if word[len(word) - 1] == '"':
-                lastQuote = False
-            word = re.sub(r"[^a-zA-Z0-9ÀÂÄÇÈÉÊËÎÏÙÛÜàâäçèéêëîïùûüœ’`'-+]", " ", word)
+        if word != "" and word != " " and word is not None:
             word.strip()
-            if isCorrect(word) is not True:
-                word = correctWord(previousWord, word)
-            if " " in word:
-                for unigram in word.split(" "):
-                    addUnigram(unigram)
-            else:
+            if re.search(r"[a-zA-Z0-9ÀÂÄÇÈÉÊËÎÏÔÙÛÜàâäçèéêëîïôùûüœ+]", word) is not None:
+                firstQuote = False
+                lastQuote = False
+                if word[0] == '"':
+                    firstQuote = True
+                if word[len(word) - 1] == '"':
+                    lastQuote = False
+                word = re.sub(r'"', "", word)
+                if chkr.check(word) is not True:
+                    word = correctWord(previousWord, word)
+                if " " in word:
+                    for unigram in word.split(" "):
+                        addUnigram(unigram)
                 addUnigram(word)
-            if previousWord is not None:
-                addBigram(previousWord + " " + word)
-            previousWord = word
-            if coma:
-                word += ','
+                if previousWord is not None:
+                    addBigram(previousWord + " " + word)
+                previousWord = word
+                if firstQuote:
+                    word = '"' + word
+                    previousWord = None
+                if lastQuote:
+                    word += '"'
+                    previousWord = None
+            else:
                 previousWord = None
-            elif dot:
-                word += '.'
-                previousWord = None
-            if firstQuote:
-                word = '"' + word
-                previousWord = None
-            if lastQuote:
-                word += '"'
-                previousWord = None
-        else:
-            previousWord = None
-        if word != "" and word != " ":
             correctedWords.append(word)
     if len(correctedWords) > 0:
         correctedWords[0] = correctedWords[0].capitalize()

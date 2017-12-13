@@ -1,14 +1,15 @@
 import os
+import re
 
 badWordsTxt = open("dictionnaire_mot_cle.txt", 'r', encoding="utf8")
 badWords = list()
 for badWord in badWordsTxt:
-    badWords.append(badWord)
+    badWords.append(badWord.strip())
 badWordsTxt.close()
 
 def isBadTweet(tweet):
     for badWord in badWords:
-        if badWord in tweet:
+        if re.search(r" {0} ".format(badWord), tweet) is not None:
             return True
     return False
 
