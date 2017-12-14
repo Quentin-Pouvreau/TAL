@@ -15,7 +15,6 @@ oauth_token_secret="U6rxN7HE2lfnkWJ9zqCew3x52hlvKSkrIl7GvgsVtqZNx"
 
 auth = tweepy.OAuthHandler(app_key, app_secret)
 auth.set_access_token(oauth_token, oauth_token_secret)
-
 api = tweepy.API(auth)
 
 
@@ -40,7 +39,7 @@ def process_status(status):
 
 
 def building_learning_corpus():
-	stream_tweets = tweepy.Cursor(api.search, q="*", tweet_mode="extended", lang="fr").items(1000)
+	stream_tweets = tweepy.Cursor(api.search, q="* -filter:retweets", tweet_mode="extended", lang="fr").items(1000)
 	file_name = "Corpus_Apprentissage/corpus_apprentissage_"+time.strftime('%d-%m-%Y')+"_"+time.strftime('%Ih%M')+".txt"
 	apprentissage = open(file_name,"a",encoding="utf8")
 	for tweet in stream_tweets:
@@ -81,33 +80,5 @@ def building_corpus(select):
 	os.system("rm badTweets.melt")
 	os.system("cat correctedCorpus.txt | MElt -L -T >> MEltedTweets.melt")
 	semantic.filterBadTweets("MEltedTweets.melt")
-	os.system("grew -det -grs POStoSSQ/grs/surf_synt_main.grs -strat full -i MEltedTweets.melt -f resultat.conll -old_grs")
-	
-'''
-		if semantic.isBadTweet(meltedtweet.readline()):
-		apprentissage.write(str(tweet.user.screen_name)+"\nle "+str(tweet.created_at)+" a dit :\n"+corrected_tweet+"\n"+"------"+"\n")
-		semantic.filterBadTweets("correctedCorpus.txt")
-		os.system("cat badTweets.txt | MElt -L -T > melt_badword.melt")
-
-		'''
-
-
-def process_user(users):
-	for user in users:
-		print (user.name)
-		print (user.description)
-		print (user.location)
-
-
-tweets_sample_by_location = tweepy.Cursor(api.search, q="Emmanuel Macron", geocode="48.692054,6.184417,50km", tweet_mode="extended", lang="fr").items(50)
-mode = input("Que shouaitez-vous faire : \n - Créer un corpus d'apprentissage, taper 1 \n - Faire une recherche sur le harcèlement taper 2 \n")
-if mode == "1":
-	print("wait...")
-	building_learning_corpus()
-elif mode == "2":
-	select = input("Votre recherche porte sur : \n - Une victime, taper 1 \n - Un agresseur, taper 2 \n")
-	building_corpus(select)
-else:
-	sys.exit("Mauvaise valeur") 
-
-'''tweets_sample_by_name = tweepy.Cursor(api.search, q="emanuel macron from:piparkaq", tweet_mode="extended").items()'''
+	os.system("grew -det -grs POStoSSQ/grs/surf_synt_main.grs -strat full -i badTweets.melt -f resultatgrew.conll -old_grs")
+	semantic.isConfirmedBadTweet("resultatgrew.conll")

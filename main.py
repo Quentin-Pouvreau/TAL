@@ -3,62 +3,14 @@
 import os
 import smoothing
 import semantic
+import tweets_processing
 
-<<<<<<< HEAD
-
-
-
-'''semantic.filterBadTweets("MEltedTweets6_short.melt")'''
-semantic.filterNegation("resultat.conll")
-
-
-'''os.system("rm MEltedTweets.melt")
-os.system("rm badTweets.melt")
-smoothing.correctCorpus("Corpus_Apprentissage/corpus_apprentissage_05-12-2017_04h05.txt")
-os.system("cat correctedCorpus.txt | MElt -L -T >> MEltedTweets5.melt")
-semantic.filterBadTweets("MEltedTweets1.melt")'''
-
-
-
-
-
-''' 
-
-from subprocess import Popen,PIPE,STDOUT,run
-
-clean_tweet = "bonjour je m'appel gentil"
-
-proc=run(["echo "+str(clean_tweet)+" | MElt -L -T"], shell=True, stdout=PIPE)
-print("Comande is :"+str(proc.stdout))
-
-
-def cmdline(command):
-    process = subprocess.Popen(args=command,stdout=subprocess.PIPE,shell=True)
-    return process
-
-print(cmdline("echo "+clean_tweet+" | MElt -L -T"))
-
-
-result = subprocess.run(["MElt -L -T", clean_tweet], stdout=subprocess.PIPE, shell=True)
-print(result.stdout)
-
-tweetmelte = os.system("echo "+clean_tweet+" | MElt -L -T")
-
-print(semantic.isBadTweet("Cette Pute"))
-smoothing.correctCorpus("Corpus_Apprentissage/corpus_apprentissage_21-11-2017_10h14.txt")
-smoothing.correctCorpus("Corpus_Apprentissage/corpus_apprentissage_21-11-2017_10h14.txt")
-=======
-
-
-smoothing.majUnigrams()
-smoothing.majBigrams()
-semantic.filterBadTweets("MEltedCorpus/MEltedTweets1.melt")
-
-
-os.system("grew -det -grs POStoSSQ/grs/surf_synt_main.grs -strat full -i badTweets.melt -f badword.conll -old_grs")
-
-os.system("cat badTweets.txt | MElt -L -T > melt_badword.melt")
-
-os.system("cat badTweets.txt | MElt -L -T > melt_badword.melt")
-
-'''
+mode = input("Que shouaitez-vous faire : \n - Créer un corpus d'apprentissage, taper 1 \n - Faire une recherche sur le harcèlement taper 2 \n")
+if mode == "1":
+	print("wait...")
+	tweets_processing.building_learning_corpus()
+elif mode == "2":
+	select = input("Votre recherche porte sur : \n - Une victime, taper 1 \n - Un agresseur, taper 2 \n")
+	tweets_processing.building_corpus(select)
+else:
+	sys.exit("Mauvaise valeur") 

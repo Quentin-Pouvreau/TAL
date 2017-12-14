@@ -29,7 +29,6 @@ def isBadTweet(meltedTweet):
             return True
     return False
 
-
 def prepare(grewtweet):
     matrixGrew = list()
     for line in grewtweet.split(" "):
@@ -100,7 +99,7 @@ def filterBadTweets(meltedTweetsFile):
 
 
 def isConfirmedBadTweet(grewedTweet):
-    '''grewedTweet is a tab which contains syntax analyze of tweet'''
+    #grewedTweet is a tab which contains syntax analyze of tweet
     for token in grewedTweet:
         if token[2] in badWords:
             if token[7] == "_" or token[7] == "suj" or token[7] == "obj":
@@ -111,7 +110,6 @@ def isConfirmedBadTweet(grewedTweet):
             elif token[7] == "mod":
                 if isTargeted(token, grewedTweet):
                     return True
-
     return False
 
 
