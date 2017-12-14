@@ -29,11 +29,11 @@ def isBadTweet(meltedTweet):
             return True
     return False
 
-def prepar(grewtweet):
+def prepare(grewtweet):
     w, h = 10, 280;
     matrixGrew = [[0 for x in range(w)] for y in range(h)] 
     i=0
-    for line in grewTweet.split(" "):
+    for line in grewtweet.split(" "):
         lineclean = line.strip("\n")
         listitems = lineclean.split("\t")
         y=0
@@ -43,11 +43,11 @@ def prepar(grewtweet):
         i+=1
     return matrixGrew
 
-def isNegation(grewTweet):
-        assignementBadWord = ""
-        assignementNegation = ""
+def isNegation(matrixGrew):
+    assignementBadWord = ""
+    assignementNegation = ""
     for z in range(len(matrixGrew)):
-        if str(matrixGrew[z][1]) in badWords:
+        if str(matrixGrew[z][2]) in badWords:
             if str(matrixGrew[z][7]) == "ats":
                 assignementBadWord = matrixGrew[z][6]
                 if assignementBadWord == "_":
@@ -62,17 +62,17 @@ def isNegation(grewTweet):
                     return True
     return False
 ''' voir les obj.p'''
-def filterNegation(grewFile):
+def comfirmBadTweets(grewFile):
     grewTweets = open(grewFile, 'r', encoding="utf8")
     nonNegationTweets = open("nonNegationTweets.conll", 'w', encoding="utf8")
     negationTweets = open("negationTweets.conll", 'w', encoding="utf8")
     grewTweet = ""
     for line in grewTweets: 
         if not line.strip():
-            if not isNegation(grewTweet):
-                nonNegationTweets.write(grewTweet+"\n")
-            elif isNegation(grewTweet):
+            if isNegation(prepare(grewTweet)):
                 negationTweets.write(grewTweet+"\n")
+            else:
+                nonNegationTweets.write(grewTweet+"\n")
             grewTweet = ""
         else:
             grewTweet = grewTweet+line+" \n"
