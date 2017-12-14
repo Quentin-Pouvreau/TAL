@@ -20,7 +20,7 @@ def isBadTweet(meltedTweet):
             return True
     return False
 
-def isNegation(grewTweet):
+def prepar(grewtweet):
     w, h = 10, 280;
     matrixGrew = [[0 for x in range(w)] for y in range(h)] 
     i=0
@@ -32,6 +32,9 @@ def isNegation(grewTweet):
             matrixGrew[i][y] = item
             y+=1   
         i+=1
+    return matrixGrew
+
+def isNegation(grewTweet):
         assignementBadWord = ""
         assignementNegation = ""
     for z in range(len(matrixGrew)):
