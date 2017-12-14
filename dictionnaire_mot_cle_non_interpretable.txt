@@ -13,12 +13,19 @@ bounioul
 branleur
 brise-burne
 brise-burnes
+brise burne
+brise burnes
 caldoche
 casse-bonbon
 casse-couille
 casse-couilles
 casse-burne
 casse-burnes
+casse bonbon
+casse couille
+casse couilles
+casse burne
+casse burnes
 chagasse
 chiennasse
 chinetoc
@@ -77,6 +84,7 @@ gueniche
 guide de merde
 guindoule
 halouf
+idiot
 imbécile
 jean-foutre
 jean foutre
@@ -158,6 +166,9 @@ trou du cul
 trouduc
 truiasse
 vaurien
+vide-couille
+vide-couilles
+vide couille
 vide-couilles
 youpin
 youpine

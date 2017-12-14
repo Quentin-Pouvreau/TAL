@@ -29,6 +29,7 @@ def isBadTweet(meltedTweet):
             return True
     return False
 
+
 def isNegation(grewTweet):
     w, h = 10, 280;
     matrixGrew = [[0 for x in range(w)] for y in range(h)] 
@@ -58,7 +59,8 @@ def isNegation(grewTweet):
                 if matrixGrew[int(assignementNegation)-1][2] in ("être", "consister", "demeurer", "devenir", "rester", "s'appeler", "sembler", "paraître"):
                     return True
     return False
-''' voir les obj.p'''
+
+
 def filterNegation(grewFile):
     grewTweets = open(grewFile, 'r', encoding="utf8")
     nonNegationTweets = open("nonNegationTweets.conll", 'w', encoding="utf8")
@@ -105,28 +107,24 @@ def confirmBadTweet(grewedTweet):
     '''grewedTweet is a tab which contains syntax analyze of tweet'''
     for token in grewedTweet:
         if token[2] in badWords:
-            if token[7] == "ats" or token[7] == "mod":
-                if isNotTargeted(token, grewedTweet):
-                    return False
-            elif token[7] == "_":
+            if token[7] == "_" or token[7] == "suj" or token[7] == "obj":
                 return True
-            elif token[7] == "suj":
-                return True
-            elif token[7] == "obj":
-                return True
+            elif token[7] == "ats" or token[7] == "mod":
+                if isTargeted(token, grewedTweet):
+                    return True
     return False
 
 
-def isNotTargeted(badWord, grewedTweet):
+def isTargeted(badWord, grewedTweet):
     for token in grewedTweet:
         if token[6] == badWord[6] and token[2] != badWord[2]:
             if badWord[7] == "ats" and token[7] == "suj":
                 if re.match(r"je|j'|nous|c'|ça|cela", token[1]) is not None:
-                    return True
+                    return False
         if token[0] == badWord[6] and token[7] == "ats":
-            return isNotTargeted(token, grewedTweet)
+            return isTargeted(token, grewedTweet)
         elif token[0] == badWord[6] and token[7] == "suj" and token[3] == "N":
             for det in grewedTweet:
                 if det[6] == token[0] and det[7] == "det" and det[2] == "un":
-                    return True
-    return False
+                    return False
+    return True
