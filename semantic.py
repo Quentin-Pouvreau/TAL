@@ -32,7 +32,8 @@ def isBadTweet(meltedTweet):
 def prepare(grewtweet):
     matrixGrew = list()
     for line in grewtweet.split(" "):
-        matrixGrew.append(line.split("\t"))
+        if line != "\n":
+            matrixGrew.append(line.strip().split("\t"))
     return matrixGrew
 
 def isNegation(badWord, matrixGrew):
@@ -50,26 +51,29 @@ def comfirmBadTweets(grewFile):
     nonNegationTweets = open("nonNegationTweets.conll", 'w', encoding="utf8")
     negationTweets = open("negationTweets.conll", 'w', encoding="utf8")
     grewTweet = ""
-    for line in grewTweets: 
-        if not line.strip():
-            grewmatrice = prepare(grewTweet)
-            if isConfirmedBadTweet(grewmatrice):
-                tokens = list()
-                for token in grewmatrice:
-                    tokens.append(str(token[1]))
-                s = " "
-                grewTweet = s.join(tokens)
-                negationTweets.write(grewTweet)
+    try:
+        for line in grewTweets:
+            if not line.strip():
+                grewmatrice = prepare(grewTweet)
+                if isConfirmedBadTweet(grewmatrice):
+                    tokens = list()
+                    for token in grewmatrice:
+                        tokens.append(token[1])
+                    s = " "
+                    grewTweet = s.join(tokens)
+                    negationTweets.write(grewTweet+"\n")
+                else:
+                    tokens = list()
+                    for token in grewmatrice:
+                        tokens.append(token[1])
+                    s = " "
+                    grewTweet = s.join(tokens)
+                    nonNegationTweets.write(grewTweet+"\n")
+                grewTweet = ""
             else:
-                tokens = list()
-                for token in grewmatrice:
-                    tokens.append(str(token[1]))
-                s = " "
-                grewTweet = s.join(tokens)
-                nonNegationTweets.write(grewTweet)
-            grewTweet = ""
-        else:
-            grewTweet = grewTweet+line+" \n"
+                grewTweet = grewTweet+line+" \n"
+    except:
+        print(token)
     grewTweets.close()
     nonNegationTweets.close()
     negationTweets.close()
@@ -99,17 +103,37 @@ def filterBadTweets(meltedTweetsFile):
 
 
 def isConfirmedBadTweet(grewedTweet):
-    #grewedTweet is a tab which contains syntax analyze of tweet
-    for token in grewedTweet:
-        if token[2] in badWords:
-            if token[7] == "_" or token[7] == "suj" or token[7] == "obj":
+    '''grewedTweet is a tab which contains syntax analyze of tweet'''
+    try:
+        for token in grewedTweet:
+            if isBadWord(token, grewedTweet):
+                if token[7] == "_" or token[7] == "suj" or token[7] == "obj":
+                    return True
+                elif token[7] == "ats":
+                    if not isNegation(token,grewedTweet) and isTargeted(token, grewedTweet):
+                        return True
+                elif token[7] == "mod":
+                    if isTargeted(token, grewedTweet):
+                        return True
+    except:
+        print(token)
+    return False
+
+def isBadWord(token, grewedTweet):
+    for badWord in badWords:
+        if " " in badWord:
+            i = -1
+            confirmed = True
+            for word in badWord.split(" "):
+                if re.search(word, grewedTweet[int(token[0]) + i][2]) is not None:
+                    i += 1
+                else:
+                    confirmed = False
+                    break
+            if confirmed:
                 return True
-            elif token[7] == "ats":
-                if not isNegation(token,grewedTweet) and isTargeted(token, grewedTweet):
-                    return True
-            elif token[7] == "mod":
-                if isTargeted(token, grewedTweet):
-                    return True
+        elif token[2] == badWord:
+            return True
     return False
 
 
