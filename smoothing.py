@@ -33,7 +33,11 @@ commonPatterns["pcq"] = "parce que"
 commonPatterns["pq"] = "pourquoi"
 commonPatterns["pr"] = "pour"
 commonPatterns["qqn"] = "quelqu'un"
+commonPatterns["qlqn"] = "quelqu'un"
 commonPatterns["qqc"] = "quelque chose"
+commonPatterns["qlqchose"] = "quelque chose"
+commonPatterns["vs"] = "vous"
+commonPatterns["srx"] = "sérieux"
 commonPatterns["svp"] = "s'il vous plaît"
 commonPatterns["stp"] = "s'il te plaît"
 commonPatterns["slt"] = "salut"
@@ -159,10 +163,13 @@ def correctTweet(tweet):
                 if word[0] == '"':
                     firstQuote = True
                 if word[len(word) - 1] == '"':
-                    lastQuote = False
+                    lastQuote = True
                 word = re.sub(r'"', "", word)
                 if chkr.check(word) is not True:
                     word = correctWord(previousWord, word)
+                lowerWord = word.lower()
+                if lowerWord is True:
+                    word = lowerWord
                 if " " in word:
                     for unigram in word.split(" "):
                         addUnigram(unigram)
