@@ -57,11 +57,11 @@ def building_corpus(select):
 	data = None 
 	if select == "1":
 		var = input("Entrez le nom de la victime que vous cherchez :")
-		data = tweepy.Cursor(api.search, q="="+var+"", tweet_mode="extended", lang="fr").items(100)
+		data = tweepy.Cursor(api.search, q="="+var+" -filter:retweets", tweet_mode="extended", lang="fr").items(500)
 	elif select == "2":
 		var = input("Entrez le nom d'utilisateur Twitter de l'agresseur que vous cherchez :")
 		data = re.sub(r"@\S+","", str(var))
-		data = tweepy.Cursor(api.user_timeline, "@"+str(var)+"", tweet_mode="extended").items(100)
+		data = tweepy.Cursor(api.user_timeline, "@"+str(var)+"", tweet_mode="extended").items(500)
 	else:
 		sys.exit("Mauvaise valeur") 
 
@@ -69,17 +69,19 @@ def building_corpus(select):
 	corpus = open(file_name,"a",encoding="utf8")
 	for tweet in data:
 		if "retweeted_status" in dir(tweet): 
-			rt = ""
+			rt = rt = tweet.retweeted_status.full_text
 		else:
 			rt = tweet.full_text
 		clean_tweet = re.sub(r"http\S+","", rt)
-		'''corpus.write(str(tweet.user.screen_name)+"\nle "+str(tweet.created_at)+" a dit :\n"+corrected_tweet+"\n"+"------"+"\n")'''
-		corpus.write("---"+str(tweet.user.screen_name)+"---"+clean_tweet+"\n")
-	'''smoothing.correctCorpus(file_name)
+		clean_tweet = re.sub(r"#","", clean_tweet)
+		corpus.write(clean_tweet+"\n")
+	corpus.close()
+	smoothing.correctCorpus(file_name)
 	os.system("rm MEltedTweets.melt")
 	os.system("rm badTweets.melt")
 	os.system("cat correctedCorpus.txt | MElt -L -T >> MEltedTweets.melt")
-	semantic.filterBadTweets("MEltedTweets.melt")'''
+	semantic.filterBadTweets("MEltedTweets.melt")
+	os.system("grew -det -grs POStoSSQ/grs/surf_synt_main.grs -strat full -i MEltedTweets.melt -f resultat.conll -old_grs")
 	
 '''
 		if semantic.isBadTweet(meltedtweet.readline()):
