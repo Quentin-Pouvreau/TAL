@@ -1,7 +1,8 @@
+# -*- coding: utf-8 -*-
+
 import os
 import smoothing
 import semantic
-
 
 '''smoothing.correctCorpus("Corpus_Apprentissage/corpus_apprentissage_21-11-2017_10h14.txt")
 smoothing.majUnigrams()
