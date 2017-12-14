@@ -80,5 +80,5 @@ def building_corpus(select):
 	os.system("rm badTweets.melt")
 	os.system("cat correctedCorpus.txt | MElt -L -T >> MEltedTweets.melt")
 	semantic.filterBadTweets("MEltedTweets.melt")
-	os.system("grew -det -grs POStoSSQ/grs/surf_synt_main.grs -strat full -i badTweets.melt -f resultatgrew.conll -old_grs")
-	semantic.isConfirmedBadTweet("resultatgrew.conll")
+	os.system("grew -det -grs POStoSSQ/grs/surf_synt_main.grs -i badTweets.melt -f resultatgrew.conll")
+	semantic.comfirmBadTweets("resultatgrew.conll")

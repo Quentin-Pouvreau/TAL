@@ -1,0 +1,26 @@
+1	MDR	*MDR	N	NPP	s=p|sentid=00000	_	_	_	_
+2	il	cln|ilimp	CL	CLS	s=suj	3	suj	_	_
+3	est	être	V	V	m=ind	_	_	_	_
+4	trop	trop	ADV	ADV	_	5	mod	_	_
+5	susceptible	susceptible	A	ADJ	_	3	ats	_	_
+6	ce	ce	D	DET	_	7	det	_	_
+7	cono	*cono	N	NC	s=c	_	_	_	_
+8	.	.	PONCT	PONCT	_	9	ponct	_	_
+9	Moi	*Moi	CL	CLS	s=suj	_	_	_	_
+10	je	cln	CL	CLS	s=suj	13	suj	_	_
+11	l'	cla	CL	CLO	s=obj	13	obj	_	_
+12	avais	avoir	V	V	m=ind	13	aux.tps	_	_
+13	appelé	appeler	V	VPP	m=part|t=past	_	_	_	_
+14	grastatouille	*grastatouille	A	ADJ	_	13	mod	_	_
+15	quand	quand	C	CS	s=s	14	mod	_	_
+16	il	cln|ilimp	CL	CLS	s=suj	17	suj	_	_
+17	disait	dire	V	V	m=ind	15	obj.cpl	_	_
+18	Marseille	Marseille	N	NPP	s=p	17	obj	_	_
+19	c'	ce	CL	CLS	s=suj	20	suj	_	_
+20	est	être	V	V	m=ind	_	_	_	_
+21	plein	plein	A	ADJ	_	20	ats	_	_
+22	de	de	P	P	_	_	_	_	_
+23	rats	rat	N	NC	s=c	22	obj.p	_	_
+24	CE	*CE	N	NPP	s=p	_	_	_	_
+25	fdp	*fdp	ET	ET	_	24	mod	_	_
+
