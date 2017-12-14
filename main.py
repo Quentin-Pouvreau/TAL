@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
-
 import os
 import smoothing
 import semantic
 
+<<<<<<< HEAD
 
 
 
@@ -46,11 +46,16 @@ tweetmelte = os.system("echo "+clean_tweet+" | MElt -L -T")
 
 print(semantic.isBadTweet("Cette Pute"))
 smoothing.correctCorpus("Corpus_Apprentissage/corpus_apprentissage_21-11-2017_10h14.txt")
+smoothing.correctCorpus("Corpus_Apprentissage/corpus_apprentissage_21-11-2017_10h14.txt")
+=======
+
+
 smoothing.majUnigrams()
 smoothing.majBigrams()
-semantic.filterBadTweets("correctedCorpus.txt")
+semantic.filterBadTweets("MEltedCorpus/MEltedTweets1.melt")
 
-os.system("grew -det -grs POStoSSQ/grs/surf_synt_main.grs -strat full -i melt_badword.melt -f badword.conll -old_grs")
+
+os.system("grew -det -grs POStoSSQ/grs/surf_synt_main.grs -strat full -i badTweets.melt -f badword.conll -old_grs")
 
 os.system("cat badTweets.txt | MElt -L -T > melt_badword.melt")
 
