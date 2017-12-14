@@ -9,7 +9,7 @@ import semantic
 
 
 '''semantic.filterBadTweets("MEltedTweets6_short.melt")'''
-semantic.filterNegation("badTweets.conll")
+semantic.filterNegation("resultat.conll")
 
 
 '''os.system("rm MEltedTweets.melt")
