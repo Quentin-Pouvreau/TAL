@@ -4,12 +4,7 @@ import os
 import smoothing
 import semantic
 
-<<<<<<< HEAD
-
-
-
-'''semantic.filterBadTweets("MEltedTweets6_short.melt")'''
-semantic.filterNegation("resultat.conll")
+semantic.comfirmBadTweets("badword.conll")
 
 
 '''os.system("rm MEltedTweets.melt")
