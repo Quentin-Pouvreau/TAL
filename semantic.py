@@ -16,7 +16,7 @@ def isBadTweet(tweetmelte):
     s = " "
     tweet = s.join(tokens)
     for badWord in badWords:
-        if re.search(r" {0} ".format(badWord), tweet) is not None:
+        if re.search(r"{0}".format(badWord), tweet) is not None:
             return True
     return False
 
@@ -29,3 +29,4 @@ def filterBadTweets(tweets):
             badTweets.write(tweet)
     badTweets.close()
     tweets.close()
+
