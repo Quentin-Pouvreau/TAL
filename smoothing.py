@@ -25,6 +25,7 @@ chkr = enchant.Dict("fr_FR")
 commonPatterns = dict()
 commonPatterns["ya"] = "il y a"
 commonPatterns["y'a"] = "il y a"
+commonPatterns["y ' a"] = "il y a"
 commonPatterns["il ya"] = "y a"
 commonPatterns["1er"] = "premier"
 commonPatterns["1 er"] = "premier"
@@ -201,6 +202,7 @@ def correctCorpus(corpus):
         correctedCorpus.write(correctedLine + "\n")
     correctedCorpus.close()
     corpus.close()
+
 
 def majUnigrams():
     unigramsTxt = open("unigrams.txt", 'w', encoding="utf8")

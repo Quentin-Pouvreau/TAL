@@ -22,7 +22,7 @@ def file_reader(fileNameTweets):
 	with open(fileNameTweets, "r") as tweetReader:
 		for readline in (tweetReader):
 			#tweetReader.readline()
-			print(readline)
+			# print(readline)
 			os.system("echo \" "+readline+"\" | MElt")
 
 

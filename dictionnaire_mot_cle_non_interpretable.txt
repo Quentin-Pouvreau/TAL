@@ -32,6 +32,7 @@ chinetoc
 chinetoque
 chintok
 con
+cono
 conasse
 connard
 connarde
