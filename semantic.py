@@ -59,12 +59,14 @@ def comfirmBadTweets(grewFile):
     infirmedBadTweets = open("infirmedBadTweets.txt", 'w', encoding="utf8")
     confirmedBadTweets = open("confirmedBadTweets.txt", 'w', encoding="utf8")
     grewTweet = ""
+    count = 0
     for line in grewTweets:
         if not line.strip():
             grewmatrice = prepare(grewTweet)
             if isConfirmedBadTweet(grewmatrice):
                 grewTweet = getGrewedToken(grewmatrice)
                 confirmedBadTweets.write(grewTweet+"\n")
+                count += 1
             else:
                 grewTweet = getGrewedToken(grewmatrice)
                 infirmedBadTweets.write(grewTweet+"\n")
@@ -74,6 +76,7 @@ def comfirmBadTweets(grewFile):
     grewTweets.close()
     infirmedBadTweets.close()
     confirmedBadTweets.close()
+    print("Cette recherche donne un total de "+str(count)+" considéré agressifs")
 
 
 def canBeBadTweet(meltedTweet):
